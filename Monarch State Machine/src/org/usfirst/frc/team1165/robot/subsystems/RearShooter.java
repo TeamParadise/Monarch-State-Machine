@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import util.State;
 
 /**
@@ -17,7 +16,7 @@ public class RearShooter extends StateMachine
 	private static RearShooter mInstance = new RearShooter();
 
 	private WPI_TalonSRX mRearRightMotor = new WPI_TalonSRX(RobotMap.REAR_RIGHT_SHOOTER_PORT);
-	private WPI_TalonSRX mRearLeftMotor = new WPI_TalonSRX(RobotMap.REAR_LEFT_SHOOTER_PORT);
+	private WPI_TalonSRX mRearLeftMotor = new WPI_TalonSRX(RobotMap.ROTARY_LIFT_PORT);
 
 	protected RearShooter()
 	{
@@ -31,6 +30,7 @@ public class RearShooter extends StateMachine
 			@Override
 			public void execute()
 			{
+				reportState("Rear Shooter", this);
 				mInstance.mRearRightMotor.set(0);
 				mInstance.mRearLeftMotor.set(0);
 			}
@@ -40,6 +40,7 @@ public class RearShooter extends StateMachine
 			@Override
 			public void execute()
 			{
+				reportState("Rear Shooter", this);
 				mInstance.mRearRightMotor.set(1);
 				mInstance.mRearLeftMotor.set(1);
 			}
@@ -49,14 +50,10 @@ public class RearShooter extends StateMachine
 			@Override
 			public void execute()
 			{
+				reportState("Rear Shooter", this);
 				mInstance.mRearRightMotor.set(-1);
 				mInstance.mRearLeftMotor.set(-1);
 			}
-		};
-
-		@Override
-		public void execute()
-		{
 		}
 	}
 
@@ -68,7 +65,7 @@ public class RearShooter extends StateMachine
 	@Override
 	public SendableChooser<State> getStateChooser()
 	{
-		return super.getStateChooser(RearShooterState.values(), RearShooterState.IDLE);
+		return getStateChooser(RearShooterState.values(), RearShooterState.IDLE);
 	}
 
 	@Override

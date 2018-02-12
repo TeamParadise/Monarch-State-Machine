@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import util.State;
 
 /**
@@ -31,7 +30,7 @@ public class ClimberPiston extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Climber Piston State: " + this);
+				reportState("Climber Piston", this);
 				mInstance.mClimberSolenoid.set(Value.kOff);
 			}
 		},
@@ -40,7 +39,7 @@ public class ClimberPiston extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Climber Piston State: " + this);
+				reportState("Climber Piston", this);
 				mInstance.mClimberSolenoid.set(Value.kForward);
 			}
 		},
@@ -49,13 +48,9 @@ public class ClimberPiston extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Climber Piston State: " + this);
+				reportState("Climber Piston", this);
 				mInstance.mClimberSolenoid.set(Value.kReverse);
 			}
-		};
-
-		public void execute()
-		{
 		}
 	}
 
@@ -66,7 +61,7 @@ public class ClimberPiston extends StateMachine
 
 	public SendableChooser<State> getStateChooser()
 	{
-		return super.getStateChooser(ClimberPistonState.values(), ClimberPistonState.IDLE);
+		return getStateChooser(ClimberPistonState.values(), ClimberPistonState.IDLE);
 	}
 
 	@Override

@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import util.State;
 
 /**
@@ -14,7 +13,7 @@ import util.State;
  */
 public class FrontShooter extends StateMachine
 {
-	private static FrontShooter mInstance = new FrontShooter();
+	private static final FrontShooter mInstance = new FrontShooter();
 
 	private WPI_TalonSRX mFrontRightMotor = new WPI_TalonSRX(RobotMap.FRONT_RIGHT_SHOOTER_PORT);
 	private WPI_TalonSRX mFrontLeftMotor = new WPI_TalonSRX(RobotMap.FRONT_LEFT_SHOOTER_PORT);
@@ -30,6 +29,7 @@ public class FrontShooter extends StateMachine
 			@Override
 			public void execute()
 			{
+				reportState("Front Shooter", this);
 				mInstance.mFrontRightMotor.set(0);
 				mInstance.mFrontLeftMotor.set(0);
 			}
@@ -39,6 +39,7 @@ public class FrontShooter extends StateMachine
 			@Override
 			public void execute()
 			{
+				reportState("Front Shooter", this);
 				mInstance.mFrontRightMotor.set(1);
 				mInstance.mFrontLeftMotor.set(1);
 			}
@@ -48,6 +49,7 @@ public class FrontShooter extends StateMachine
 			@Override
 			public void execute()
 			{
+				reportState("Front Shooter", this);
 				mInstance.mFrontRightMotor.set(-1);
 				mInstance.mFrontLeftMotor.set(-1);
 			}
@@ -57,6 +59,7 @@ public class FrontShooter extends StateMachine
 			@Override
 			public void execute()
 			{
+				reportState("Front Shooter", this);
 				mInstance.mFrontRightMotor.set(1);
 				mInstance.mFrontLeftMotor.set(-1);
 			}
@@ -66,14 +69,10 @@ public class FrontShooter extends StateMachine
 			@Override
 			public void execute()
 			{
+				reportState("Front Shooter", this);
 				mInstance.mFrontRightMotor.set(-1);
 				mInstance.mFrontLeftMotor.set(1);
 			}
-		};
-
-		@Override
-		public void execute()
-		{
 		}
 	}
 
@@ -85,7 +84,7 @@ public class FrontShooter extends StateMachine
 	@Override
 	public SendableChooser<State> getStateChooser()
 	{
-		return super.getStateChooser(FrontShooterState.values(), FrontShooterState.IDLE);
+		return getStateChooser(FrontShooterState.values(), FrontShooterState.IDLE);
 	}
 
 	@Override

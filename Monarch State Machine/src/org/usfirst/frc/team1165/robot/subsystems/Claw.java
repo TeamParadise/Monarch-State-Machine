@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import util.State;
 
 /**
@@ -31,7 +30,7 @@ public class Claw extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Claw State: " + this);
+				reportState("Claw", this);
 				mInstance.mClawSolenoid.set(Value.kOff);
 			}
 		},
@@ -40,7 +39,7 @@ public class Claw extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Claw State: " + this);
+				reportState("Claw", this);
 				mInstance.mClawSolenoid.set(Value.kReverse);
 			}
 		},
@@ -49,21 +48,9 @@ public class Claw extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Claw State: " + this);
+				reportState("Claw", this);
 				mInstance.mClawSolenoid.set(Value.kForward);
 			}
-		};
-
-		@Override
-		public void execute()
-		{
-		}
-		
-		@Override
-		public String toString()
-		{
-			System.out.println(this);
-			return super.toString().toLowerCase();
 		}
 	}
 

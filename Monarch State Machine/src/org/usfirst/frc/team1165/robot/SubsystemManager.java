@@ -3,21 +3,11 @@ package org.usfirst.frc.team1165.robot;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team1165.robot.commands.ExecuteState;
-import org.usfirst.frc.team1165.robot.subsystems.AirCompressor;
 import org.usfirst.frc.team1165.robot.subsystems.Claw;
-import org.usfirst.frc.team1165.robot.subsystems.ClimberIsolate;
-import org.usfirst.frc.team1165.robot.subsystems.ClimberPiston;
-import org.usfirst.frc.team1165.robot.subsystems.FrontShooter;
-import org.usfirst.frc.team1165.robot.subsystems.PneumaticsTest;
-import org.usfirst.frc.team1165.robot.subsystems.RearShooter;
 import org.usfirst.frc.team1165.robot.subsystems.StateMachine;
-
-import org.usfirst.frc.team1165.robot.subsystems.superstructures.Climber;
-import org.usfirst.frc.team1165.robot.subsystems.superstructures.Intake;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import util.State;
 
 public class SubsystemManager
@@ -30,16 +20,19 @@ public class SubsystemManager
 	{
 //		add(FrontShooter.getInstance());
 //		add(RearShooter.getInstance());
-//		add(Claw.getInstance());
-		add(Intake.getInstance());
+		add(Claw.getInstance());
+//		add(Intake.getInstance());
 
+//		add(LinearLift.getInstance());
+//		add(RotaryLift.getInstance());
+		
 //		add(ClimberPiston.getInstance());
 //		add(ClimberIsolate.getInstance());
 //		add(Climber.getInstance());
 //
 //		add(AirCompressor.getInstance());
 		
-		add(PneumaticsTest.getInstance());
+//		add(PneumaticsTest.getInstance());
 	}
 
 	public void add(StateMachine subsystem)

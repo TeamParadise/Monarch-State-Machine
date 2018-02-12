@@ -2,14 +2,13 @@
 package org.usfirst.frc.team1165.robot.subsystems.superstructures;
 
 import org.usfirst.frc.team1165.robot.subsystems.ClimberIsolate;
-import org.usfirst.frc.team1165.robot.subsystems.ClimberPiston;
-import org.usfirst.frc.team1165.robot.subsystems.StateMachine;
 import org.usfirst.frc.team1165.robot.subsystems.ClimberIsolate.ClimberIsolateState;
+import org.usfirst.frc.team1165.robot.subsystems.ClimberPiston;
 import org.usfirst.frc.team1165.robot.subsystems.ClimberPiston.ClimberPistonState;
+import org.usfirst.frc.team1165.robot.subsystems.StateMachine;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import util.State;
 
 /**
@@ -33,10 +32,9 @@ public class Climber extends StateMachine
 			@Override
 			public void execute()
 			{
-				// System.out.println("Setting Climber State: " + this);
-				// mInstance.state = this;
-				// mInstance.climberIsolate.setState(ClimberIsolateState.IDLE);
-				// mInstance.climberPiston.setState(ClimberPistonState.IDLE);
+				reportState("Climber", this);
+				mInstance.climberIsolate.setState(ClimberIsolateState.IDLE);
+				mInstance.climberPiston.setState(ClimberPistonState.IDLE);
 			}
 		},
 		STAGE_RETRACT
@@ -44,7 +42,7 @@ public class Climber extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Climber State: " + this);
+				reportState("Climber", this);
 				mInstance.climberIsolate.setState(ClimberIsolateState.ISOLATE);
 				mInstance.climberPiston.setState(ClimberPistonState.RETRACT);
 			}
@@ -54,7 +52,7 @@ public class Climber extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Climber State: " + this);
+				reportState("Climber", this);
 				mInstance.climberPiston.setState(ClimberPistonState.RETRACT);
 			}
 		},
@@ -63,7 +61,7 @@ public class Climber extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Climber State: " + this);
+				reportState("Climber", this);
 				mInstance.climberIsolate.setState(ClimberIsolateState.ISOLATE);
 				mInstance.climberPiston.setState(ClimberPistonState.EXTEND);
 			}
@@ -73,7 +71,7 @@ public class Climber extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Climber State: " + this);
+				reportState("Climber", this);
 				mInstance.climberPiston.setState(ClimberPistonState.EXTEND);
 			}
 		},
@@ -82,13 +80,9 @@ public class Climber extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Climber State: " + this);
+				reportState("Climber", this);
 				mInstance.climberPiston.setState(ClimberIsolateState.FIRE);
 			}
-		};
-
-		public void execute()
-		{
 		}
 	}
 
@@ -100,7 +94,7 @@ public class Climber extends StateMachine
 	@Override
 	public SendableChooser<State> getStateChooser()
 	{
-		return super.getStateChooser(ClimberState.values(), ClimberState.IDLE);
+		return getStateChooser(ClimberState.values(), ClimberState.IDLE);
 	}
 
 	@Override

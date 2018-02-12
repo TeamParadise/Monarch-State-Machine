@@ -1,18 +1,20 @@
 package org.usfirst.frc.team1165.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import util.State;
 
 /**
  *
  */
-public abstract class StateMachine extends Subsystem
+public abstract class StateMachinePID extends PIDSubsystem
 {
+
 	protected State state = SampleState.IDLE;
 
-	protected StateMachine()
+	public StateMachinePID(String name, double kP, double kI, double kD, double kF)
 	{
+		super(name, kP, kI, kD, kF);
 	}
 
 	private enum SampleState implements State

@@ -6,30 +6,29 @@ import org.usfirst.frc.team1165.robot.RobotMap;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import util.State;
 
 /**
  *
  */
-public class PneumaticsTest extends StateMachine
+public class ClimberWheels extends StateMachine
 {
-	private static final PneumaticsTest mInstance = new PneumaticsTest();
+	private static final ClimberWheels mInstance = new ClimberWheels();
 
 	private Solenoid mTestSolenoid = new Solenoid(RobotMap.PCM_1, 1);
 
-	protected PneumaticsTest()
+	protected ClimberWheels()
 	{
 	}
 
-	public static enum TestState implements State
+	public static enum ClimberWheelsState implements State
 	{
 		IDLE
 		{
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Test Piston State: " + this);
+				reportState("Climber Wheels", this);
 				EXTEND.execute();
 			}
 		},
@@ -38,7 +37,7 @@ public class PneumaticsTest extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Test Piston State: " + this);
+				reportState("Climber Wheels", this);
 				mInstance.mTestSolenoid.set(true);
 			}
 		},
@@ -47,18 +46,13 @@ public class PneumaticsTest extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Test Piston State: " + this);
+				reportState("Climber Wheels", this);
 				mInstance.mTestSolenoid.set(false);
 			}
-		};
-
-		@Override
-		public void execute()
-		{
 		}
 	}
 
-	public synchronized static PneumaticsTest getInstance()
+	public synchronized static ClimberWheels getInstance()
 	{
 		return mInstance;
 	}
@@ -66,7 +60,7 @@ public class PneumaticsTest extends StateMachine
 	@Override
 	public SendableChooser<State> getStateChooser()
 	{
-		return getStateChooser(TestState.values(), TestState.IDLE);
+		return getStateChooser(ClimberWheelsState.values(), ClimberWheelsState.IDLE);
 	}
 
 	@Override
@@ -77,8 +71,8 @@ public class PneumaticsTest extends StateMachine
 	@Override
 	public void report()
 	{
-		SmartDashboard.putString("Test Status", getState().toString());
+		SmartDashboard.putString("Climber Wheels Status", getState().toString());
 
-		SmartDashboard.putBoolean("Test Piston", mTestSolenoid.get());
+		SmartDashboard.putBoolean("Climber Wheels Piston", mTestSolenoid.get());
 	}
 }

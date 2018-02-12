@@ -11,7 +11,6 @@ import org.usfirst.frc.team1165.robot.subsystems.StateMachine;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import util.State;
 
 /**
@@ -100,7 +99,7 @@ public class Intake extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Intake State: " + this);
+				reportState("Intake", this);
 				mInstance.mClaw.setState(ClawState.IDLE);
 				mInstance.mFrontShooter.setState(FrontShooterState.IDLE);
 				mInstance.mRearShooter.setState(RearShooterState.IDLE);
@@ -111,7 +110,7 @@ public class Intake extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Intake State: " + this);
+				reportState("Intake", this);
 				mInstance.mClaw.setState(ClawState.OPEN);
 				mInstance.mFrontShooter.setState(FrontShooterState.IDLE);
 				mInstance.mRearShooter.setState(RearShooterState.IDLE);
@@ -122,7 +121,7 @@ public class Intake extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Intake State: " + this);
+				reportState("Intake", this);
 				mInstance.mClaw.setState(ClawState.OPEN);
 				mInstance.mFrontShooter.setState(FrontShooterState.INTAKE);
 				mInstance.mRearShooter.setState(RearShooterState.INTAKE);
@@ -133,7 +132,7 @@ public class Intake extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Intake State: " + this);
+				reportState("Intake", this);
 				mInstance.mClaw.setState(ClawState.OPEN);
 				mInstance.mFrontShooter.setState(FrontShooterState.TWIST_RIGHT);
 				mInstance.mRearShooter.setState(RearShooterState.IDLE);
@@ -144,7 +143,7 @@ public class Intake extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Intake State: " + this);
+				reportState("Intake", this);
 				mInstance.mClaw.setState(ClawState.OPEN);
 				mInstance.mFrontShooter.setState(FrontShooterState.TWIST_LEFT);
 				mInstance.mRearShooter.setState(RearShooterState.IDLE);
@@ -155,7 +154,7 @@ public class Intake extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Intake State: " + this);
+				reportState("Intake", this);
 				mInstance.mClaw.setState(ClawState.CLOSE);
 				mInstance.mFrontShooter.setState(FrontShooterState.INTAKE);
 				mInstance.mRearShooter.setState(RearShooterState.INTAKE);
@@ -166,7 +165,7 @@ public class Intake extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Intake State: " + this);
+				reportState("Intake", this);
 				mInstance.mClaw.setState(ClawState.CLOSE);
 				mInstance.mFrontShooter.setState(FrontShooterState.IDLE);
 				mInstance.mRearShooter.setState(RearShooterState.IDLE);
@@ -177,16 +176,11 @@ public class Intake extends StateMachine
 			@Override
 			public void execute()
 			{
-				System.out.println("Setting Intake State: " + this);
-				System.out.println("Claw State: " + mInstance.mClaw.getState());
+				reportState("Intake", this);
 				mInstance.mClaw.setState(ClawState.CLOSE);
 				mInstance.mFrontShooter.setState(FrontShooterState.EJECT);
 				mInstance.mRearShooter.setState(RearShooterState.EJECT);
 			}
-		};
-
-		public void execute()
-		{
 		}
 	}
 
@@ -198,7 +192,7 @@ public class Intake extends StateMachine
 	@Override
 	public SendableChooser<State> getStateChooser()
 	{
-		return super.getStateChooser(IntakeState.values(), IntakeState.IDLE);
+		return getStateChooser(IntakeState.values(), IntakeState.IDLE);
 	}
 
 	@Override
