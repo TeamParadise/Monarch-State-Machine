@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import util.State;
 
 /**
+ * 
+ * @author Kesav Kadalazhi
  *
  */
 public abstract class StateMachine extends Subsystem

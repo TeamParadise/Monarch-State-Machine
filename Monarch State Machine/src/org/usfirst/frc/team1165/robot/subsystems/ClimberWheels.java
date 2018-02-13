@@ -9,19 +9,32 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import util.State;
 
 /**
+ * <p>
+ * The ClimberWheels consists of two stops at the back of the robot that are let out 
+ * </p>
+ * 
+ * <p>The ClimberWheels has three states:</p>
+ * 
+ * <ol>
+ * <li>Idle (default)</li>
+ * <li>Open</li>
+ * <li>Close</li>
+ * </ol>
+ * 
+ * @author Kesav Kadalazhi
  *
  */
 public class ClimberWheels extends StateMachine
 {
 	private static final ClimberWheels mInstance = new ClimberWheels();
 
-	private Solenoid mTestSolenoid = new Solenoid(RobotMap.PCM_1, 1);
+	private Solenoid mClimberWheelsSolenoid = new Solenoid(RobotMap.PCM_1, RobotMap.SOLENOID_CLIMBER_WHEELS_PORT);
 
 	protected ClimberWheels()
 	{
 	}
 
-	public static enum ClimberWheelsState implements State
+	public enum ClimberWheelsState implements State
 	{
 		IDLE
 		{
@@ -29,25 +42,25 @@ public class ClimberWheels extends StateMachine
 			public void execute()
 			{
 				reportState("Climber Wheels", this);
-				EXTEND.execute();
+				mInstance.mClimberWheelsSolenoid.set(false);
 			}
 		},
-		RETRACT
+		ENGAGE
 		{
 			@Override
 			public void execute()
 			{
 				reportState("Climber Wheels", this);
-				mInstance.mTestSolenoid.set(true);
+				mInstance.mClimberWheelsSolenoid.set(true);
 			}
 		},
-		EXTEND
+		DISENGAGE
 		{
 			@Override
 			public void execute()
 			{
 				reportState("Climber Wheels", this);
-				mInstance.mTestSolenoid.set(false);
+				mInstance.mClimberWheelsSolenoid.set(false);
 			}
 		}
 	}
@@ -73,6 +86,6 @@ public class ClimberWheels extends StateMachine
 	{
 		SmartDashboard.putString("Climber Wheels Status", getState().toString());
 
-		SmartDashboard.putBoolean("Climber Wheels Piston", mTestSolenoid.get());
+		SmartDashboard.putBoolean("Climber Wheels Piston", mClimberWheelsSolenoid.get());
 	}
 }

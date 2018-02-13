@@ -5,6 +5,8 @@ import org.usfirst.frc.team1165.robot.subsystems.ClimberIsolate;
 import org.usfirst.frc.team1165.robot.subsystems.ClimberIsolate.ClimberIsolateState;
 import org.usfirst.frc.team1165.robot.subsystems.ClimberPiston;
 import org.usfirst.frc.team1165.robot.subsystems.ClimberPiston.ClimberPistonState;
+import org.usfirst.frc.team1165.robot.subsystems.ClimberWheels;
+import org.usfirst.frc.team1165.robot.subsystems.ClimberWheels.ClimberWheelsState;
 import org.usfirst.frc.team1165.robot.subsystems.StateMachine;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -12,20 +14,38 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import util.State;
 
 /**
+ * <p>
+ * The Climber is the combination of the {@link ClimberPiston}, the
+ * {@link ClimberIsolate} and the {@link ClimberWheels}.
+ * </p>
+ * <p>
+ * The Claw has six states:
+ * </p>
+ * <ol>
+ * <li>Idle (default)</li>
+ * <li>Stage Climb</li>
+ * <li>Climb</li>
+ * <li>Stage Extend</li>
+ * <li>Extend</li>
+ * <li>Fire</li>
+ * </ol>
+ * 
+ * @author Kesav Kadalazhi
  *
  */
 public class Climber extends StateMachine
 {
 	private static final Climber mInstance = new Climber();
 
-	private ClimberPiston climberPiston = ClimberPiston.getInstance();
-	private ClimberIsolate climberIsolate = ClimberIsolate.getInstance();
+	private ClimberPiston mClimberPiston = ClimberPiston.getInstance();
+	private ClimberIsolate mClimberIsolate = ClimberIsolate.getInstance();
+	private ClimberWheels mClimberWheels = ClimberWheels.getInstance();
 
 	protected Climber()
 	{
 	}
 
-	public static enum ClimberState implements State
+	public enum ClimberState implements State
 	{
 		IDLE
 		{
@@ -33,27 +53,29 @@ public class Climber extends StateMachine
 			public void execute()
 			{
 				reportState("Climber", this);
-				mInstance.climberIsolate.setState(ClimberIsolateState.IDLE);
-				mInstance.climberPiston.setState(ClimberPistonState.IDLE);
+				mInstance.mClimberIsolate.setState(ClimberIsolateState.IDLE);
+				mInstance.mClimberPiston.setState(ClimberPistonState.IDLE);
+				mInstance.mClimberWheels.setState(ClimberWheelsState.IDLE);
 			}
 		},
-		STAGE_RETRACT
+		STAGE_CLIMB
 		{
 			@Override
 			public void execute()
 			{
 				reportState("Climber", this);
-				mInstance.climberIsolate.setState(ClimberIsolateState.ISOLATE);
-				mInstance.climberPiston.setState(ClimberPistonState.RETRACT);
+				mInstance.mClimberIsolate.setState(ClimberIsolateState.ISOLATE);
+				mInstance.mClimberPiston.setState(ClimberPistonState.RETRACT);
 			}
 		},
-		RETRACT
+		CLIMB
 		{
 			@Override
 			public void execute()
 			{
 				reportState("Climber", this);
-				mInstance.climberPiston.setState(ClimberPistonState.RETRACT);
+				mInstance.mClimberPiston.setState(ClimberPistonState.RETRACT);
+				mInstance.mClimberWheels.setState(ClimberWheelsState.ENGAGE);
 			}
 		},
 		STAGE_EXTEND
@@ -62,8 +84,8 @@ public class Climber extends StateMachine
 			public void execute()
 			{
 				reportState("Climber", this);
-				mInstance.climberIsolate.setState(ClimberIsolateState.ISOLATE);
-				mInstance.climberPiston.setState(ClimberPistonState.EXTEND);
+				mInstance.mClimberIsolate.setState(ClimberIsolateState.ISOLATE);
+				mInstance.mClimberPiston.setState(ClimberPistonState.EXTEND);
 			}
 		},
 		EXTEND
@@ -72,7 +94,9 @@ public class Climber extends StateMachine
 			public void execute()
 			{
 				reportState("Climber", this);
-				mInstance.climberPiston.setState(ClimberPistonState.EXTEND);
+				mInstance.mClimberPiston.setState(ClimberPistonState.EXTEND);
+				mInstance.mClimberWheels.setState(ClimberWheelsState.IDLE);
+				mInstance.mClimberWheels.setState(ClimberWheelsState.DISENGAGE);
 			}
 		},
 		FIRE
@@ -81,7 +105,7 @@ public class Climber extends StateMachine
 			public void execute()
 			{
 				reportState("Climber", this);
-				mInstance.climberPiston.setState(ClimberIsolateState.FIRE);
+				mInstance.mClimberPiston.setState(ClimberIsolateState.FIRE);
 			}
 		}
 	}

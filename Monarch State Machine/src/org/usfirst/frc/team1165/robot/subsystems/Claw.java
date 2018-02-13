@@ -10,6 +10,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import util.State;
 
 /**
+ * <p>
+ * The Claw consists of two pistons, which are controlled by one {@link DoubleSolenoid}.
+ * </p>
+ * 
+ * <p>
+ * The Claw has three states:
+ * </p>
+ * 
+ * <ol>
+ * <li>Idle (default)</li>
+ * <li>Open</li>
+ * <li>Close</li>
+ * </ol>
+ * 
+ * @author Kesav Kadalazhi
  *
  */
 public class Claw extends StateMachine
@@ -23,7 +38,7 @@ public class Claw extends StateMachine
 	{
 	}
 
-	public static enum ClawState implements State
+	public enum ClawState implements State
 	{
 		IDLE
 		{
@@ -41,6 +56,11 @@ public class Claw extends StateMachine
 			{
 				reportState("Claw", this);
 				mInstance.mClawSolenoid.set(Value.kReverse);
+				
+				try {Thread.sleep(60);}
+				catch (InterruptedException e) { e.printStackTrace(); }
+				
+				mInstance.mClawSolenoid.set(Value.kOff);
 			}
 		},
 		CLOSE
@@ -50,6 +70,11 @@ public class Claw extends StateMachine
 			{
 				reportState("Claw", this);
 				mInstance.mClawSolenoid.set(Value.kForward);
+				
+				try { Thread.sleep(60); }
+				catch (InterruptedException e) { e.printStackTrace(); }
+				
+				mInstance.mClawSolenoid.set(Value.kOff);
 			}
 		}
 	}

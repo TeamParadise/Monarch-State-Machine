@@ -3,8 +3,8 @@ package org.usfirst.frc.team1165.robot.subsystems.superstructures;
 
 import org.usfirst.frc.team1165.robot.subsystems.LinearLift;
 import org.usfirst.frc.team1165.robot.subsystems.LinearLift.LinearLiftState;
-import org.usfirst.frc.team1165.robot.subsystems.RotaryLift;
-import org.usfirst.frc.team1165.robot.subsystems.RotaryLift.RotaryLiftState;
+import org.usfirst.frc.team1165.robot.subsystems.RotaryLiftPID;
+import org.usfirst.frc.team1165.robot.subsystems.RotaryLiftPID.RotaryLiftState;
 import org.usfirst.frc.team1165.robot.subsystems.StateMachine;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import util.State;
 
 /**
+ * 
+ * @author Kesav Kadalazhi
  *
  */
 public class Lift extends StateMachine
@@ -19,13 +21,13 @@ public class Lift extends StateMachine
 	private static final Lift mInstance = new Lift();
 
 	private LinearLift mLinearLift = LinearLift.getInstance();
-	private RotaryLift mRotaryLift = RotaryLift.getInstance();
+	private RotaryLiftPID mRotaryLift = RotaryLiftPID.getInstance();
 
 	protected Lift()
 	{
 	}
 
-	public static enum LiftState implements State
+	public enum LiftState implements State
 	{
 		IDLE
 		{
@@ -33,8 +35,8 @@ public class Lift extends StateMachine
 			public void execute()
 			{
 				reportState("Lift", this);
-				mInstance.mLinearLift.setState(LinearLiftState.IDLE);
-				mInstance.mRotaryLift.setState(RotaryLiftState.IDLE);
+//				mInstance.mLinearLift.setState(LinearLiftState.IDLE);
+//				mInstance.mRotaryLift.setState(RotaryLiftState.IDLE);
 			}
 		},
 		STAGE_INTAKE
@@ -43,8 +45,8 @@ public class Lift extends StateMachine
 			public void execute()
 			{
 				reportState("Lift", this);
-				mInstance.mLinearLift.setState(LinearLiftState.DOWN);
-				mInstance.mRotaryLift.setState(RotaryLiftState.DOWN);
+//				mInstance.mLinearLift.setState(LinearLiftState.DOWN);
+//				mInstance.mRotaryLift.setState(RotaryLiftState.DOWN);
 			}
 		},
 		STAGE_EJECT
@@ -53,8 +55,8 @@ public class Lift extends StateMachine
 			public void execute()
 			{
 				reportState("Lift", this);
-				mInstance.mLinearLift.setState(LinearLiftState.UP);
-				mInstance.mRotaryLift.setState(RotaryLiftState.UP);
+//				mInstance.mLinearLift.setState(LinearLiftState.UP);
+//				mInstance.mRotaryLift.setState(RotaryLiftState.UP);
 			}
 		}
 	}

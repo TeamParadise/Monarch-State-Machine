@@ -5,6 +5,8 @@ package org.usfirst.frc.team1165.robot;
  * to a variable name. This provides flexibility changing wiring, makes checking
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
+ * 
+ * @author Kesav Kadalazhi
  */
 public class RobotMap
 {
@@ -24,12 +26,15 @@ public class RobotMap
 
 	// SENSORS
 	
+	public static final int LINEAR_LIFT_ENCODER_PORT = 0; // placeholder value
 	public static final int ROTARY_LIFT_POT_PORT = 0; // placeholder value
 
 	// PNEUMATICS
 	
 	public static final int PCM_1 = 1;
-
+	
+	public static final int SOLENOID_CLIMBER_WHEELS_PORT = 1;
+	
 	public static final int SOLENOID_CLIMBER_ISOLATE_PORT = 2;
 	public static final int SOLENOID_CLIMBER_FIRE_PORT = 3;
 

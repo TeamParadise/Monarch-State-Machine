@@ -9,6 +9,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import util.State;
 
 /**
+ * <p>Class to control and report the status of the compressor.</p>
+ * 
+ * <p>The AirCompressor has three states:</p>
+ * 
+ * <ol>
+ * <li>Idle (default)</li>
+ * <li>Open</li>
+ * <li>Close</li>
+ * </ol>
+ * 
+ * @author Kesav Kadalazhi
  *
  */
 public class AirCompressor extends StateMachine
@@ -21,8 +32,16 @@ public class AirCompressor extends StateMachine
 	{
 	}
 
+	/**
+	 * The AirCompressor has three states: idle(default), start, and stop.
+	 *
+	 */
 	public enum AirCompressorState implements State
 	{
+
+		/**
+		 * Turn the AirCompressor off (default behavior).
+		 */
 		IDLE
 		{
 			@Override
@@ -32,6 +51,10 @@ public class AirCompressor extends StateMachine
 				mInstance.mCompressor.stop();
 			}
 		},
+
+		/**
+		 * Turn the AirCompressor on.
+		 */
 		START
 		{
 			@Override
@@ -41,6 +64,9 @@ public class AirCompressor extends StateMachine
 				mInstance.mCompressor.start();
 			}
 		},
+		/**
+		 * Turn the AirCompressor off.
+		 */
 		STOP
 		{
 			@Override
@@ -57,16 +83,6 @@ public class AirCompressor extends StateMachine
 		return mInstance;
 	}
 
-	public boolean isEnabled()
-	{
-		return mCompressor.enabled();
-	}
-
-	public double getCurrent()
-	{
-		return mCompressor.getCompressorCurrent();
-	}
-
 	public SendableChooser<State> getStateChooser()
 	{
 		return getStateChooser(AirCompressorState.values(), AirCompressorState.IDLE);
@@ -81,7 +97,7 @@ public class AirCompressor extends StateMachine
 	{
 		SmartDashboard.putString("Compressor Status", getState().toString());
 
-		SmartDashboard.putBoolean("Compressor On", isEnabled());
-		SmartDashboard.putNumber("Compressor Current", getCurrent());
+		SmartDashboard.putBoolean("Compressor On", mCompressor.enabled());
+		SmartDashboard.putNumber("Compressor Current", mCompressor.getCompressorCurrent());
 	}
 }

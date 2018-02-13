@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import util.State;
 
 /**
+ * 
+ * @author Kesav Kadalazhi
  *
  */
 public class Intake extends StateMachine

@@ -4,12 +4,19 @@ import java.util.ArrayList;
 
 import org.usfirst.frc.team1165.robot.commands.ExecuteState;
 import org.usfirst.frc.team1165.robot.subsystems.Claw;
+import org.usfirst.frc.team1165.robot.subsystems.ClimberWheels;
 import org.usfirst.frc.team1165.robot.subsystems.StateMachine;
+import org.usfirst.frc.team1165.robot.subsystems.superstructures.Lift;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import util.State;
 
+/**
+ * 
+ * @author Kesav Kadalazhi
+ *
+ */
 public class SubsystemManager
 {
 	private ArrayList<StateMachine> mSubsystems = new ArrayList<StateMachine>();
@@ -25,14 +32,14 @@ public class SubsystemManager
 
 //		add(LinearLift.getInstance());
 //		add(RotaryLift.getInstance());
+//		add(Lift.getInstance());
 		
 //		add(ClimberPiston.getInstance());
 //		add(ClimberIsolate.getInstance());
+		add(ClimberWheels.getInstance());
 //		add(Climber.getInstance());
-//
-//		add(AirCompressor.getInstance());
-		
-//		add(PneumaticsTest.getInstance());
+
+//		add(AirCompressor.getInstance());		
 	}
 
 	public void add(StateMachine subsystem)

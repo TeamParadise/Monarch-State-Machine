@@ -10,6 +10,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import util.State;
 
 /**
+ * <p>
+ * The ClimberPiston consists of the piston that retracts the Climber, which is
+ * controlled by a {@link DoubleSolenoid}.
+ * </p>
+ * 
+ * <p>
+ * The ClimberPiston has three states:
+ * </p>
+ * 
+ * <ol>
+ * <li>Idle (default)</li>
+ * <li>Extend</li>
+ * <li>Retract</li>
+ * </ol>
+ * 
+ * @author Kesav Kadalazhi
  *
  */
 public class ClimberPiston extends StateMachine
@@ -23,7 +39,7 @@ public class ClimberPiston extends StateMachine
 	{
 	}
 
-	public static enum ClimberPistonState implements State
+	public enum ClimberPistonState implements State
 	{
 		IDLE
 		{

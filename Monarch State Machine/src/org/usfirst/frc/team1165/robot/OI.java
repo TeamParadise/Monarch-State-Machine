@@ -1,6 +1,8 @@
 package org.usfirst.frc.team1165.robot;
 
 import org.usfirst.frc.team1165.robot.commands.ExecuteState;
+import org.usfirst.frc.team1165.robot.subsystems.Claw.ClawState;
+import org.usfirst.frc.team1165.robot.subsystems.ClimberWheels.ClimberWheelsState;
 import org.usfirst.frc.team1165.robot.subsystems.superstructures.Intake.IntakeState;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -11,6 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
+ * 
+ * @author Kesav Kadalazhi
  */
 public class OI
 {
@@ -27,12 +31,14 @@ public class OI
 	
 	public OI()
 	{
-		mButtonA.whenPressed(new ExecuteState(IntakeState.IDLE));
-		mButtonB.whenPressed(new ExecuteState(IntakeState.OPEN));
-		mButtonX.whenPressed(new ExecuteState(IntakeState.STAGE_INTAKE));
-		mButtonY.whenPressed(new ExecuteState(IntakeState.TWIST_RIGHT));
-		mButtonLB.whenPressed(new ExecuteState(IntakeState.TWIST_LEFT));
-		mButtonRB.whenPressed(new ExecuteState(IntakeState.INTAKE));
+		mButtonA.whenPressed(new ExecuteState(ClawState.IDLE));
+		mButtonB.whenPressed(new ExecuteState(ClawState.OPEN));
+		mButtonX.whenPressed(new ExecuteState(ClawState.CLOSE));
+		
+		mButtonY.whenPressed(new ExecuteState(ClimberWheelsState.IDLE));
+		mButtonLB.whenPressed(new ExecuteState(ClimberWheelsState.ENGAGE));
+		mButtonRB.whenPressed(new ExecuteState(ClimberWheelsState.DISENGAGE));
+		
 		mButtonLeftStick.whenPressed(new ExecuteState(IntakeState.STORE));
 		mButtonRightStick.whenPressed(new ExecuteState(IntakeState.SPIT));
 		

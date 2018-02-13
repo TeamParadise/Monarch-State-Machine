@@ -10,6 +10,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import util.State;
 
 /**
+ * <p>
+ * The ClimberIsolate consists of one {@link DoubleSolenoid} that isolates or
+ * powers the Climber. This is part of the system to make the Climber retract
+ * faster.
+ * </p>
+ * 
+ * <p>
+ * The ClimberIsolate has three states:
+ * </p>
+ * 
+ * <ol>
+ * <li>Idle (default)</li>
+ * <li>Isolate</li>
+ * <li>Fire</li>
+ * </ol>
+ * 
+ * @author Kesav Kadalazhi
  *
  */
 public class ClimberIsolate extends StateMachine
@@ -23,7 +40,7 @@ public class ClimberIsolate extends StateMachine
 	{
 	}
 
-	public static enum ClimberIsolateState implements State
+	public enum ClimberIsolateState implements State
 	{
 		IDLE
 		{
