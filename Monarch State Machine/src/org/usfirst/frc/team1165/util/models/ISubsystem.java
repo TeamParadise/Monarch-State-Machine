@@ -5,6 +5,5 @@ package org.usfirst.frc.team1165.util.models;
  * @author Kesav Kadalazhi
  *
  */
-public interface ISubsystem extends IControllable, IReportable
-{
+public interface ISubsystem extends IReportable, IControllable {
 }

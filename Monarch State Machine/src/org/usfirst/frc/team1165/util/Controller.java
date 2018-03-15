@@ -11,12 +11,20 @@ import edu.wpi.first.wpilibj.XboxController;
  * 
  * @author Kesav Kadalazhi
  */
-public class Controller implements IController
-{
+public class Controller implements IController {
+	private static final IController mInstance = new Controller();
+
+	protected Controller() {
+	}
+
+	public static IController getInstance() {
+		return mInstance;
+	}
+
 	// DRIVER
-	
+
 	private Joystick mDriver = new Joystick(0);
-	
+
 	@Override
 	public boolean getClawToggle() {
 		return mDriver.getRawButton(0);
@@ -51,11 +59,11 @@ public class Controller implements IController
 	public boolean getEject() {
 		return mDriver.getRawButton(6);
 	}
-	
+
 	// CO-DRIVER
-	
+
 	private XboxController mCoDriver = new XboxController(1);
-	
+
 	@Override
 	public boolean getStageClimb() {
 		return mCoDriver.getRawButton(0);
@@ -75,10 +83,9 @@ public class Controller implements IController
 	public boolean getDropRight() {
 		return mCoDriver.getRawButton(3);
 	}
-	
+
 	@Override
-	public void report()
-	{
+	public void report() {
 	}
 
 }

@@ -7,9 +7,8 @@ import org.usfirst.frc.team1165.util.models.ISubsystem;
  * @author Kesav Kadalazhi
  *
  */
-public interface IClaw extends ISubsystem
-{
+public interface IClaw extends ISubsystem {
 	void open();
-	
+
 	void close();
 }

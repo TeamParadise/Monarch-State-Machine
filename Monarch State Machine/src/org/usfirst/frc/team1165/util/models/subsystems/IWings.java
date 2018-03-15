@@ -7,11 +7,10 @@ import org.usfirst.frc.team1165.util.models.ISubsystem;
  * @author Kesav Kadalazhi
  *
  */
-public interface IWings extends ISubsystem
-{
+public interface IWings extends ISubsystem {
 	void dropLeft();
-	
+
 	void dropRight();
-	
+
 	void reset();
 }
