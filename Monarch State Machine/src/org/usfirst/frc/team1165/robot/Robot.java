@@ -1,6 +1,21 @@
 
 package org.usfirst.frc.team1165.robot;
 
+import org.usfirst.frc.team1165.robot.subsystems.Claw;
+import org.usfirst.frc.team1165.robot.subsystems.Climber;
+import org.usfirst.frc.team1165.robot.subsystems.LinearLift;
+import org.usfirst.frc.team1165.robot.subsystems.RotaryLift;
+import org.usfirst.frc.team1165.robot.subsystems.Shooter;
+import org.usfirst.frc.team1165.robot.subsystems.Wings;
+import org.usfirst.frc.team1165.util.Controller;
+import org.usfirst.frc.team1165.util.models.IController;
+import org.usfirst.frc.team1165.util.models.subsystems.IClaw;
+import org.usfirst.frc.team1165.util.models.subsystems.IClimber;
+import org.usfirst.frc.team1165.util.models.subsystems.ILinearLift;
+import org.usfirst.frc.team1165.util.models.subsystems.IRotaryLift;
+import org.usfirst.frc.team1165.util.models.subsystems.IShooter;
+import org.usfirst.frc.team1165.util.models.subsystems.IWings;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -15,9 +30,14 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  */
 public class Robot extends IterativeRobot
 {
-	public static final OI mOI = new OI();
-
-	private static final SubsystemManager mManager = new SubsystemManager();
+	public static IClaw mClaw;
+	public static IClimber mClimber;
+	public static ILinearLift mLinearLift;
+	public static IRotaryLift mRotaryLift;
+	public static IShooter mShooter;
+	public static IWings mWings;
+	
+	private static IController mCtrl;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -25,15 +45,24 @@ public class Robot extends IterativeRobot
 	 */
 	public void robotInit()
 	{
-		mManager.putStateChooser();
+		mCtrl = new Controller();
+		
+		mClaw = new Claw(null);
+		mClimber = new Climber(null);
+		mLinearLift = new LinearLift(null, null);
+		mRotaryLift = new RotaryLift(null, null);
+		mShooter = new Shooter(null, null);
+		mWings = new Wings(null, null);
 	}
 
 	public void robotPeriodic()
 	{
-		mOI.report();
-
-		mManager.report();
-		mManager.putSelectedState();
+		mClaw.report();
+		mClimber.report();
+		mLinearLift.report();
+		mRotaryLift.report();
+		mShooter.report();
+		mWings.report();
 	}
 
 	public void disabledPeriodic()
@@ -53,30 +82,18 @@ public class Robot extends IterativeRobot
 		Scheduler.getInstance().run();
 	}
 
-	public void teleopInit()
-	{
-	}
-
-	/**
-	 * This function is called when the disabled button is hit. You can use it
-	 * to reset subsystems before shutting down.
-	 */
-	public void disabledInit()
-	{
-	}
-
 	/**
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic()
 	{
 		Scheduler.getInstance().run();
-	}
-
-	/**
-	 * This function is called periodically during test mode
-	 */
-	public void testPeriodic()
-	{
+		
+		mClaw.control(mCtrl);
+		mClimber.control(mCtrl);
+		mLinearLift.control(mCtrl);
+		mRotaryLift.control(mCtrl);
+		mShooter.control(mCtrl);
+		mWings.control(mCtrl);
 	}
 }
