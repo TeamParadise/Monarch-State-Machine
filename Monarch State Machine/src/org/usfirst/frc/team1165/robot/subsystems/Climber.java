@@ -1,7 +1,8 @@
 
 package org.usfirst.frc.team1165.robot.subsystems;
 
-import org.usfirst.frc.team1165.util.Controller;
+import org.usfirst.frc.team1165.robot.Controller;
+import org.usfirst.frc.team1165.robot.RobotMap;
 import org.usfirst.frc.team1165.util.models.controller.IController;
 import org.usfirst.frc.team1165.util.models.subsystems.IClimber;
 import org.usfirst.frc.team1165.util.states.ClimberState;
@@ -15,10 +16,9 @@ public class Climber extends Subsystem implements IClimber {
 
 	private IController ctrl = Controller.getInstance();
 
-	private DoubleSolenoid mClimber;
+	private DoubleSolenoid mClimber = RobotMap.mClimberSolenoid;
 
 	protected Climber() {
-		mClimber = new DoubleSolenoid(2, 3);
 	}
 
 	public static Climber getInstance() {

@@ -11,8 +11,6 @@ import org.usfirst.frc.team1165.robot.subsystems.Shooter;
 import org.usfirst.frc.team1165.robot.subsystems.Wings;
 import org.usfirst.frc.team1165.robot.subsystems.pid.LinearLiftPID;
 import org.usfirst.frc.team1165.robot.subsystems.pid.RotaryLiftPID;
-import org.usfirst.frc.team1165.util.Manager;
-import org.usfirst.frc.team1165.util.NavX;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1165.robot.subsystems;
 
-import org.usfirst.frc.team1165.util.Controller;
+import org.usfirst.frc.team1165.robot.Controller;
+import org.usfirst.frc.team1165.robot.RobotMap;
 import org.usfirst.frc.team1165.util.models.controller.IController;
 import org.usfirst.frc.team1165.util.models.subsystems.IDriveTrain;
 
@@ -17,10 +18,10 @@ public class DriveTrain extends Subsystem implements IDriveTrain {
 
 	private IController ctrl = Controller.getInstance();
 
-	private WPI_TalonSRX mLeftMaster = new WPI_TalonSRX(0);
-	private WPI_TalonSRX mLeftSlave = new WPI_TalonSRX(1);
-	private WPI_TalonSRX mRightMaster = new WPI_TalonSRX(2);
-	private WPI_TalonSRX mRightSlave = new WPI_TalonSRX(3);
+	private WPI_TalonSRX mLeftMaster = RobotMap.mDriveLeftMaster;
+	private WPI_TalonSRX mLeftSlave = RobotMap.mDriveLeftFollower;
+	private WPI_TalonSRX mRightMaster = RobotMap.mDriveRightMaster;
+	private WPI_TalonSRX mRightSlave = RobotMap.mDriveRightFollower;
 
 	private SpeedControllerGroup mLeftDrive = new SpeedControllerGroup(mLeftMaster, mLeftSlave);
 	private SpeedControllerGroup mRightDrive = new SpeedControllerGroup(mRightMaster, mRightSlave);
@@ -45,16 +46,6 @@ public class DriveTrain extends Subsystem implements IDriveTrain {
 	@Override
 	public void tankDrive(double leftSpeed, double rightSpeed) {
 		mDrive.tankDrive(leftSpeed, rightSpeed, false);
-	}
-
-	@Override
-	public void driveLeft(double speed) {
-		mLeftDrive.set(speed);
-	}
-
-	@Override
-	public void driveRight(double speed) {
-		mRightDrive.set(speed);
 	}
 
 	@Override

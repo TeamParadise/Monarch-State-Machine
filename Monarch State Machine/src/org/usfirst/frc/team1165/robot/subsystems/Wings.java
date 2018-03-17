@@ -1,7 +1,8 @@
 
 package org.usfirst.frc.team1165.robot.subsystems;
 
-import org.usfirst.frc.team1165.util.Controller;
+import org.usfirst.frc.team1165.robot.Controller;
+import org.usfirst.frc.team1165.robot.RobotMap;
 import org.usfirst.frc.team1165.util.models.controller.IController;
 import org.usfirst.frc.team1165.util.models.subsystems.IWings;
 import org.usfirst.frc.team1165.util.states.WingsState;
@@ -15,12 +16,10 @@ public class Wings extends Subsystem implements IWings {
 
 	private IController ctrl = Controller.getInstance();
 
-	private Solenoid mLeft;
-	private Solenoid mRight;
+	private Solenoid mLeft = RobotMap.mWingLeftSolenoid;;
+	private Solenoid mRight = RobotMap.mWingRightSolenoid;;
 
 	protected Wings() {
-		mLeft = new Solenoid(0);
-		mRight = new Solenoid(0);
 	}
 
 	public static Wings getInstance() {

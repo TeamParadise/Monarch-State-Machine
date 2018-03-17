@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1165.robot.subsystems.pid;
 
+import org.usfirst.frc.team1165.robot.NavX;
 import org.usfirst.frc.team1165.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team1165.util.NavX;
 import org.usfirst.frc.team1165.util.models.subsystems.pid.IRotateHeadingPID;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;

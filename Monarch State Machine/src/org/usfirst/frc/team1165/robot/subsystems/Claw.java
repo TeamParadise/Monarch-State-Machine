@@ -1,7 +1,8 @@
 
 package org.usfirst.frc.team1165.robot.subsystems;
 
-import org.usfirst.frc.team1165.util.Controller;
+import org.usfirst.frc.team1165.robot.Controller;
+import org.usfirst.frc.team1165.robot.RobotMap;
 import org.usfirst.frc.team1165.util.models.controller.IController;
 import org.usfirst.frc.team1165.util.models.subsystems.IClaw;
 import org.usfirst.frc.team1165.util.states.ClawState;
@@ -15,10 +16,9 @@ public class Claw extends Subsystem implements IClaw {
 
 	private IController ctrl = Controller.getInstance();
 
-	private DoubleSolenoid mClaw;
+	private DoubleSolenoid mClaw = RobotMap.mClawSolenoid;
 
 	protected Claw() {
-		mClaw = new DoubleSolenoid(0, 1);
 	}
 
 	public static Claw getInstance() {

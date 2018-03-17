@@ -1,7 +1,8 @@
 
 package org.usfirst.frc.team1165.robot.subsystems;
 
-import org.usfirst.frc.team1165.util.Controller;
+import org.usfirst.frc.team1165.robot.Controller;
+import org.usfirst.frc.team1165.robot.RobotMap;
 import org.usfirst.frc.team1165.util.models.controller.IController;
 import org.usfirst.frc.team1165.util.models.subsystems.IShooter;
 import org.usfirst.frc.team1165.util.states.ShooterState;
@@ -16,12 +17,10 @@ public class Shooter extends Subsystem implements IShooter {
 
 	private IController ctrl = Controller.getInstance();
 
-	private WPI_TalonSRX mRightMotor;
-	private WPI_TalonSRX mLeftMotor;
+	private WPI_TalonSRX mLeftMotor = RobotMap.mShooterLeftMotor;
+	private WPI_TalonSRX mRightMotor = RobotMap.mShooterRightMotor;
 
 	protected Shooter() {
-		mRightMotor = new WPI_TalonSRX(0);
-		mRightMotor = new WPI_TalonSRX(1);
 	}
 
 	public static Shooter getInstance() {

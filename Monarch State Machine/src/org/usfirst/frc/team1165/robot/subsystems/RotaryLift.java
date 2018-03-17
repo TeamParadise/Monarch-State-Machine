@@ -1,14 +1,14 @@
 
 package org.usfirst.frc.team1165.robot.subsystems;
 
-import org.usfirst.frc.team1165.util.Controller;
+import org.usfirst.frc.team1165.robot.Controller;
+import org.usfirst.frc.team1165.robot.RobotMap;
 import org.usfirst.frc.team1165.util.models.controller.IController;
 import org.usfirst.frc.team1165.util.models.subsystems.IRotaryLift;
 import org.usfirst.frc.team1165.util.states.RotaryLiftState;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,13 +18,11 @@ public class RotaryLift extends Subsystem implements IRotaryLift {
 
 	private IController ctrl = Controller.getInstance();
 
-	private WPI_TalonSRX mMotor;
+	private WPI_TalonSRX mMotor = RobotMap.mRotaryLiftMotor;
 
-	private Potentiometer mPot;
+	private Potentiometer mPot = RobotMap.mRotaryLiftPot;
 
 	protected RotaryLift() {
-		mMotor = new WPI_TalonSRX(0);
-		mPot = new AnalogPotentiometer(0, 360, 0);
 	}
 
 	public static RotaryLift getInstance() {

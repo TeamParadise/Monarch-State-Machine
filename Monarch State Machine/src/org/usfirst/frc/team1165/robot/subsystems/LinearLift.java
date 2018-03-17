@@ -1,7 +1,8 @@
 
 package org.usfirst.frc.team1165.robot.subsystems;
 
-import org.usfirst.frc.team1165.util.Controller;
+import org.usfirst.frc.team1165.robot.Controller;
+import org.usfirst.frc.team1165.robot.RobotMap;
 import org.usfirst.frc.team1165.util.models.controller.IController;
 import org.usfirst.frc.team1165.util.models.subsystems.ILinearLift;
 import org.usfirst.frc.team1165.util.states.LinearLiftState;
@@ -18,18 +19,13 @@ public class LinearLift extends Subsystem implements ILinearLift {
 
 	private IController ctrl = Controller.getInstance();
 
-	private WPI_TalonSRX mMainMotor;
-	private WPI_TalonSRX mFollowerMotor;
+	private WPI_TalonSRX mMainMotor = RobotMap.mLinearLiftMainMotor;
+	private WPI_TalonSRX mFollowerMotor = RobotMap.mLinearLiftFollowerMotor;
 
-	private SpeedControllerGroup mLift;
+	private SpeedControllerGroup mLift = new SpeedControllerGroup(mMainMotor, mFollowerMotor);
 
 	protected LinearLift() {
-		mMainMotor = new WPI_TalonSRX(0);
-		mFollowerMotor = new WPI_TalonSRX(1);
-
 		mMainMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-
-		mLift = new SpeedControllerGroup(mMainMotor, mFollowerMotor);
 	}
 
 	public static LinearLift getInstance() {

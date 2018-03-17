@@ -35,24 +35,6 @@ public interface IDriveTrain extends ISubsystem, IControllable {
 	void tankDrive(double leftSpeed, double rightSpeed);
 
 	/**
-	 * Method for driving only the left side of the differential drive platform.
-	 * 
-	 * @param speed
-	 *            The robot's left side speed along the Y axis [-1.0..1.0]. Forward
-	 *            is positive.
-	 */
-	void driveLeft(double speed);
-
-	/**
-	 * Method for driving only the right side of the differential drive platform.
-	 * 
-	 * @param speed
-	 *            The robot's left side speed along the Y axis [-1.0..1.0]. Forward
-	 *            is positive.
-	 */
-	void driveRight(double speed);
-
-	/**
 	 * Method to stop the robot's movement.
 	 */
 	default void stop() {
