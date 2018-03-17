@@ -2,15 +2,17 @@
 package org.usfirst.frc.team1165.robot.subsystems;
 
 import org.usfirst.frc.team1165.util.Controller;
-import org.usfirst.frc.team1165.util.models.IController;
+import org.usfirst.frc.team1165.util.models.controller.IController;
 import org.usfirst.frc.team1165.util.models.subsystems.IShooter;
+import org.usfirst.frc.team1165.util.states.ShooterState;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Shooter implements IShooter {
-	private static final IShooter mInstance = new Shooter();
+public class Shooter extends Subsystem implements IShooter {
+	private static final Shooter mInstance = new Shooter();
 
 	private IController ctrl = Controller.getInstance();
 
@@ -22,28 +24,16 @@ public class Shooter implements IShooter {
 		mRightMotor = new WPI_TalonSRX(1);
 	}
 
-	public static IShooter getInstance() {
+	public static Shooter getInstance() {
 		return mInstance;
 	}
 
 	// ----- IShooter ----- //
 
 	@Override
-	public void intake() {
-		mRightMotor.set(1);
-		mLeftMotor.set(1);
-	}
-
-	@Override
-	public void eject() {
-		mRightMotor.set(-1);
-		mLeftMotor.set(-1);
-	}
-
-	@Override
-	public void stop() {
-		mRightMotor.set(0);
-		mLeftMotor.set(0);
+	public void set(ShooterState state) {
+		mRightMotor.set(state.getLeft());
+		mLeftMotor.set(state.getRight());
 	}
 
 	// ----- IControllable ----- //
@@ -51,19 +41,25 @@ public class Shooter implements IShooter {
 	@Override
 	public void control() {
 		if (ctrl.getIntake())
-			intake();
+			set(ShooterState.INTAKE);
 		else if (ctrl.getEject())
-			eject();
+			set(ShooterState.EJECT);
 		else
-			stop();
+			set(ShooterState.IDLE);
 	}
 
 	// ----- IReportable ----- //
 
 	@Override
 	public void report() {
-		SmartDashboard.putNumber(getClass().getSimpleName() + " Right", mRightMotor.get());
-		SmartDashboard.putNumber(getClass().getSimpleName() + " Left", mLeftMotor.get());
+		SmartDashboard.putNumber(getName() + " Right", mRightMotor.get());
+		SmartDashboard.putNumber(getName() + " Left", mLeftMotor.get());
+	}
+
+	// ----- Subsystem ----- //
+
+	@Override
+	protected void initDefaultCommand() {
 	}
 
 }

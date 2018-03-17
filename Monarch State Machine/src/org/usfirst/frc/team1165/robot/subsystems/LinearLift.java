@@ -2,7 +2,7 @@
 package org.usfirst.frc.team1165.robot.subsystems;
 
 import org.usfirst.frc.team1165.util.Controller;
-import org.usfirst.frc.team1165.util.models.IController;
+import org.usfirst.frc.team1165.util.models.controller.IController;
 import org.usfirst.frc.team1165.util.models.subsystems.ILinearLift;
 import org.usfirst.frc.team1165.util.states.LinearLiftState;
 
@@ -10,10 +10,11 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class LinearLift implements ILinearLift {
-	private static final ILinearLift mInstance = new LinearLift();
+public class LinearLift extends Subsystem implements ILinearLift {
+	private static final LinearLift mInstance = new LinearLift();
 
 	private IController ctrl = Controller.getInstance();
 
@@ -31,7 +32,7 @@ public class LinearLift implements ILinearLift {
 		mLift = new SpeedControllerGroup(mMainMotor, mFollowerMotor);
 	}
 
-	public static ILinearLift getInstance() {
+	public static LinearLift getInstance() {
 		return mInstance;
 	}
 
@@ -72,28 +73,17 @@ public class LinearLift implements ILinearLift {
 
 	@Override
 	public boolean allow(double speed) {
-		if (getHeight() < getLowerBound() && speed < 0)
-			return false;
-		else if (getHeight() > getUpperBound() && speed > 0)
-			return false;
-		return true;
-	}
-
-	@Override
-	public void restrict() {
-		if (getHeight() < getLowerBound() || getHeight() > getUpperBound()) {
-			stop();
-		}
+		return (getHeight() < getLowerBound() && speed >= 0) || (getHeight() > getUpperBound() && speed <= 0);
 	}
 
 	// ----- IControllable ----- //
 
 	@Override
 	public void control() {
-		if (ctrl.getLinearUp() && allow(1))
-			mLift.set(1);
-		else if (ctrl.getLinearDown() && allow(-1))
-			mLift.set(-1);
+		if (ctrl.getLinearUp())
+			set(1);
+		else if (ctrl.getLinearDown())
+			set(-1);
 		else
 			stop();
 	}
@@ -102,7 +92,13 @@ public class LinearLift implements ILinearLift {
 
 	@Override
 	public void report() {
-		SmartDashboard.putNumber(getClass().getSimpleName() + " Speed", mLift.get());
+		SmartDashboard.putNumber(getName() + " Speed", mLift.get());
+	}
+
+	// ----- Subsystem ----- //
+
+	@Override
+	protected void initDefaultCommand() {
 	}
 
 }

@@ -8,5 +8,7 @@ package org.usfirst.frc.team1165.util.models;
 public interface IStateMachine {
 	void setState();
 
-	void getState();
+	IState<?> getState();
+
+	void transition(IState<?> finalState);
 }

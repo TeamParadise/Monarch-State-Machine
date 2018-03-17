@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class LinearLiftPID extends PIDSubsystem implements ILinearLiftPID {
-	private static final ILinearLiftPID mInstance = new LinearLiftPID();
+	private static final LinearLiftPID mInstance = new LinearLiftPID();
 
 	private static ILinearLift mLinearLift = LinearLift.getInstance();
 
@@ -28,16 +28,25 @@ public class LinearLiftPID extends PIDSubsystem implements ILinearLiftPID {
 		getPIDController().setContinuous(false);
 	}
 
-	public static ILinearLiftPID getInstance() {
+	public static LinearLiftPID getInstance() {
 		return mInstance;
 	}
 
 	// ----- ILinearLiftPID ----- //
 
 	@Override
-	public void setHeight(LinearLiftState position) {
-		setSetpoint(position.get());
+	public void enable(LinearLiftState state) {
+		setSetpoint(state.get());
+		enable();
 	}
+
+	@Override
+	public void disable() {
+		mLinearLift.stop();
+		super.disable();
+	}
+
+	// ----- PIDSubsystem ----- //
 
 	@Override
 	protected double returnPIDInput() {
@@ -49,24 +58,18 @@ public class LinearLiftPID extends PIDSubsystem implements ILinearLiftPID {
 		mLinearLift.set(speed);
 	}
 
-	// ----- IControllable ----- //
-
-	@Override
-	public void control() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void initDefaultCommand() {
-	}
-
 	// ----- IReportable ----- //
 
 	@Override
 	public void report() {
-		SmartDashboard.putNumber("Linear Lift Target", getSetpoint());
-		SmartDashboard.putBoolean("Linear Lift On Target", onTarget());
+		SmartDashboard.putNumber(getName() + " Target", getSetpoint());
+		SmartDashboard.putBoolean(getName() + " On Target", onTarget());
+	}
+
+	// ----- Subsystem ----- //
+
+	@Override
+	protected void initDefaultCommand() {
 	}
 
 }

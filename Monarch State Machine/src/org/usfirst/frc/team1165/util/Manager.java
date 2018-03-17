@@ -1,9 +1,9 @@
-package org.usfirst.frc.team1165.robot;
+package org.usfirst.frc.team1165.util;
 
 import java.util.List;
 
+import org.usfirst.frc.team1165.util.models.IControllable;
 import org.usfirst.frc.team1165.util.models.IManager;
-import org.usfirst.frc.team1165.util.models.IRestricted;
 import org.usfirst.frc.team1165.util.models.ISubsystem;
 
 import edu.wpi.first.wpilibj.Sendable;
@@ -24,20 +24,18 @@ public class Manager implements IManager {
 	@Override
 	public void report() {
 		mSubsystems.forEach((subsystem) -> {
-			SmartDashboard.putData((Sendable) subsystem);
 			subsystem.report();
+			if (subsystem instanceof Sendable) {
+				SmartDashboard.putData((Sendable) subsystem);
+			}
 		});
 	}
 
 	@Override
 	public void control() {
-		mSubsystems.forEach(ISubsystem::control);
-	}
-
-	public void restrict() {
 		mSubsystems.forEach((subsystem) -> {
-			if (subsystem instanceof IRestricted) {
-				((IRestricted) subsystem).restrict();
+			if (subsystem instanceof IControllable) {
+				((IControllable) subsystem).control();
 			}
 		});
 	}

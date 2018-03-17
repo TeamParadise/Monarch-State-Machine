@@ -14,30 +14,39 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class RotaryLiftPID extends PIDSubsystem implements IRotaryLiftPID {
-	private static final IRotaryLiftPID mInstance = new RotaryLiftPID();
+	private static final RotaryLiftPID mInstance = new RotaryLiftPID();
 
 	private static IRotaryLift mRotaryLift = RotaryLift.getInstance();
 
 	protected RotaryLiftPID() {
 		super("Rotary Lift PID", 0.1, 0, 0.01, 0);
 
-		setInputRange(RotaryLiftState.getLowerBound(), RotaryLiftState.getUpperBound());
+		setInputRange(mRotaryLift.getLowerBound(), mRotaryLift.getUpperBound());
 		setOutputRange(-0.2, 0.2);
 		setAbsoluteTolerance(10);
 
 		getPIDController().setContinuous(false);
 	}
 
-	public static IRotaryLiftPID getInstance() {
+	public static RotaryLiftPID getInstance() {
 		return mInstance;
 	}
 
 	// ----- IRotaryLiftPID ----- //
 
 	@Override
-	public void setAngle(RotaryLiftState state) {
+	public void enable(RotaryLiftState state) {
 		setSetpoint(state.get());
+		enable();
 	}
+
+	@Override
+	public void disable() {
+		mRotaryLift.stop();
+		super.disable();
+	}
+
+	// ----- PIDSubsystem ----- //
 
 	@Override
 	protected double returnPIDInput() {
@@ -49,24 +58,18 @@ public class RotaryLiftPID extends PIDSubsystem implements IRotaryLiftPID {
 		mRotaryLift.set(speed);
 	}
 
-	// ----- IControllable ----- //
-
-	@Override
-	public void control() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void initDefaultCommand() {
-	}
-
 	// ----- IReportable ----- //
 
 	@Override
 	public void report() {
-		SmartDashboard.putNumber("Linear Lift Target", getSetpoint());
-		SmartDashboard.putBoolean("Linear Lift On Target", onTarget());
+		SmartDashboard.putNumber(getName() + " Setpoint", getSetpoint());
+		SmartDashboard.putBoolean(getName() + " On Target", onTarget());
+	}
+
+	// ----- Subsystem ----- //
+
+	@Override
+	protected void initDefaultCommand() {
 	}
 
 }

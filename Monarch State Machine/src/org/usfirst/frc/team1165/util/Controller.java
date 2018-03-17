@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1165.util;
 
-import org.usfirst.frc.team1165.util.models.IController;
+import org.usfirst.frc.team1165.util.models.controller.IController;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -21,9 +21,24 @@ public class Controller implements IController {
 		return mInstance;
 	}
 
-	// DRIVER
+	// ----- IDriverController ----- //
 
 	private Joystick mDriver = new Joystick(0);
+
+	@Override
+	public double getDriveX() {
+		return dampen(mDriver.getX());
+	}
+
+	@Override
+	public double getDriveY() {
+		return dampen(-mDriver.getY());
+	}
+
+	@Override
+	public double getDriveTwist() {
+		return dampen(mDriver.getTwist());
+	}
 
 	@Override
 	public boolean getClawToggle() {
@@ -60,7 +75,7 @@ public class Controller implements IController {
 		return mDriver.getRawButton(6);
 	}
 
-	// CO-DRIVER
+	// ----- ICoDriverController ----- //
 
 	private XboxController mCoDriver = new XboxController(1);
 
@@ -84,8 +99,28 @@ public class Controller implements IController {
 		return mCoDriver.getRawButton(3);
 	}
 
+	// ----- Helper Methods ----- //
+
+	private static final double DEADBAND = 0.05;
+
 	@Override
-	public void report() {
+	public double dampen(double input) {
+		return Math.abs(input) < DEADBAND ? 0 : Math.pow(input, 3);
+	}
+
+	@Override
+	public double dampen(double input, double damp) {
+		return Math.abs(input) < DEADBAND ? 0 : Math.copySign(Math.pow(input, damp), input);
+	}
+
+	@Override
+	public double restrict(double input, double low, double high) {
+		if (input < low)
+			return low;
+		else if (input > high)
+			return high;
+		else
+			return input;
 	}
 
 }

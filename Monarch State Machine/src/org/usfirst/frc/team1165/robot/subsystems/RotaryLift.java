@@ -2,17 +2,19 @@
 package org.usfirst.frc.team1165.robot.subsystems;
 
 import org.usfirst.frc.team1165.util.Controller;
-import org.usfirst.frc.team1165.util.models.IController;
+import org.usfirst.frc.team1165.util.models.controller.IController;
 import org.usfirst.frc.team1165.util.models.subsystems.IRotaryLift;
+import org.usfirst.frc.team1165.util.states.RotaryLiftState;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class RotaryLift implements IRotaryLift {
-	private static final IRotaryLift mInstance = new RotaryLift();
+public class RotaryLift extends Subsystem implements IRotaryLift {
+	private static final RotaryLift mInstance = new RotaryLift();
 
 	private IController ctrl = Controller.getInstance();
 
@@ -25,7 +27,7 @@ public class RotaryLift implements IRotaryLift {
 		mPot = new AnalogPotentiometer(0, 360, 0);
 	}
 
-	public static IRotaryLift getInstance() {
+	public static RotaryLift getInstance() {
 		return mInstance;
 	}
 
@@ -33,7 +35,8 @@ public class RotaryLift implements IRotaryLift {
 
 	@Override
 	public void set(double speed) {
-		mMotor.set(speed);
+		if (allow(speed))
+			mMotor.set(speed);
 	}
 
 	@Override
@@ -46,14 +49,31 @@ public class RotaryLift implements IRotaryLift {
 		return mPot.get();
 	}
 
+	// ----- IRestricted ----- //
+
+	@Override
+	public double getLowerBound() {
+		return RotaryLiftState.INTAKE.get();
+	}
+
+	@Override
+	public double getUpperBound() {
+		return RotaryLiftState.SCALE_UP.get() + 10;
+	}
+
+	@Override
+	public boolean allow(double speed) {
+		return (getAngle() < getLowerBound() && speed >= 0) || (getAngle() > getUpperBound() && speed <= 0);
+	}
+
 	// ----- IControllable ----- //
 
 	@Override
 	public void control() {
 		if (ctrl.getRotaryUp())
-			mMotor.set(1);
+			set(1);
 		else if (ctrl.getRotaryDown())
-			mMotor.set(-1);
+			set(-1);
 		else
 			stop();
 	}
@@ -62,7 +82,13 @@ public class RotaryLift implements IRotaryLift {
 
 	@Override
 	public void report() {
-		SmartDashboard.putNumber(getClass().getSimpleName() + " Speed", mMotor.get());
+		SmartDashboard.putNumber(getName() + " Speed", mMotor.get());
+	}
+
+	// ----- Subsystem ----- //
+
+	@Override
+	protected void initDefaultCommand() {
 	}
 
 }

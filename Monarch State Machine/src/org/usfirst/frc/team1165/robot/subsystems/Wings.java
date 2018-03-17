@@ -2,14 +2,16 @@
 package org.usfirst.frc.team1165.robot.subsystems;
 
 import org.usfirst.frc.team1165.util.Controller;
-import org.usfirst.frc.team1165.util.models.IController;
+import org.usfirst.frc.team1165.util.models.controller.IController;
 import org.usfirst.frc.team1165.util.models.subsystems.IWings;
+import org.usfirst.frc.team1165.util.states.WingsState;
 
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Wings implements IWings {
-	private static final IWings mInstance = new Wings();
+public class Wings extends Subsystem implements IWings {
+	private static final Wings mInstance = new Wings();
 
 	private IController ctrl = Controller.getInstance();
 
@@ -21,26 +23,16 @@ public class Wings implements IWings {
 		mRight = new Solenoid(0);
 	}
 
-	public static IWings getInstance() {
+	public static Wings getInstance() {
 		return mInstance;
 	}
 
 	// ----- IWings ----- //
 
 	@Override
-	public void dropLeft() {
-		mLeft.set(true);
-	}
-
-	@Override
-	public void dropRight() {
-		mRight.set(true);
-	}
-
-	@Override
-	public void reset() {
-		mLeft.set(false);
-		mRight.set(false);
+	public void set(WingsState state) {
+		mLeft.set(state.getLeft());
+		mRight.set(state.getRight());
 	}
 
 	// ----- IControllable ----- //
@@ -48,20 +40,26 @@ public class Wings implements IWings {
 	@Override
 	public void control() {
 		if (ctrl.getDropLeft())
-			dropLeft();
+			set(WingsState.DROP_LEFT);
 		if (ctrl.getDropRight())
-			dropRight();
+			set(WingsState.DROP_RIGHT);
 
 		if (!(ctrl.getDropLeft() || ctrl.getDropRight()))
-			reset();
+			set(WingsState.IDLE);
 	}
 
 	// ----- IReportable ----- //
 
 	@Override
 	public void report() {
-		SmartDashboard.putBoolean(getClass().getSimpleName() + " Left State", mLeft.get());
-		SmartDashboard.putBoolean(getClass().getSimpleName() + " Right State", mRight.get());
+		SmartDashboard.putBoolean(getName() + " Left State", mLeft.get());
+		SmartDashboard.putBoolean(getName() + " Right State", mRight.get());
+	}
+
+	// ----- Subsystem ----- //
+
+	@Override
+	protected void initDefaultCommand() {
 	}
 
 }

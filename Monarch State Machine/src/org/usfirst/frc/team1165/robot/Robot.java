@@ -11,8 +11,8 @@ import org.usfirst.frc.team1165.robot.subsystems.Shooter;
 import org.usfirst.frc.team1165.robot.subsystems.Wings;
 import org.usfirst.frc.team1165.robot.subsystems.pid.LinearLiftPID;
 import org.usfirst.frc.team1165.robot.subsystems.pid.RotaryLiftPID;
-import org.usfirst.frc.team1165.util.Controller;
-import org.usfirst.frc.team1165.util.models.IController;
+import org.usfirst.frc.team1165.util.Manager;
+import org.usfirst.frc.team1165.util.NavX;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -27,24 +27,23 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  * @author Kesav Kadalazhi
  */
 public class Robot extends IterativeRobot {
+
 	private static Manager mManager = new Manager(Arrays.asList(Claw.getInstance(), Climber.getInstance(),
 			LinearLift.getInstance(), RotaryLift.getInstance(), Shooter.getInstance(), Wings.getInstance(),
-			LinearLiftPID.getInstance(), RotaryLiftPID.getInstance()));
 
-	private static IController mCtrl = Controller.getInstance();
+			LinearLiftPID.getInstance(), RotaryLiftPID.getInstance()));
 
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
 	 */
 	public void robotInit() {
-		//
 	}
 
 	public void robotPeriodic() {
-		mCtrl.report();
 		mManager.report();
-		mManager.restrict();
+
+		NavX.getInstance().report();
 	}
 
 	public void disabledPeriodic() {

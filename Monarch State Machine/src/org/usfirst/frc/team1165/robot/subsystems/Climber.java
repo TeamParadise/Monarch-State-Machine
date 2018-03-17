@@ -1,18 +1,17 @@
 
 package org.usfirst.frc.team1165.robot.subsystems;
 
-import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kForward;
-import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kReverse;
-
 import org.usfirst.frc.team1165.util.Controller;
-import org.usfirst.frc.team1165.util.models.IController;
+import org.usfirst.frc.team1165.util.models.controller.IController;
 import org.usfirst.frc.team1165.util.models.subsystems.IClimber;
+import org.usfirst.frc.team1165.util.states.ClimberState;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Climber implements IClimber {
-	private static final IClimber mInstance = new Climber();
+public class Climber extends Subsystem implements IClimber {
+	private static final Climber mInstance = new Climber();
 
 	private IController ctrl = Controller.getInstance();
 
@@ -22,37 +21,39 @@ public class Climber implements IClimber {
 		mClimber = new DoubleSolenoid(2, 3);
 	}
 
-	public static IClimber getInstance() {
+	public static Climber getInstance() {
 		return mInstance;
 	}
 
 	// ----- IClimber ----- //
 
 	@Override
-	public void stageClimb() {
-		mClimber.set(kForward);
-	}
-
-	@Override
-	public void climb() {
-		mClimber.set(kReverse);
+	public void set(ClimberState state) {
+		mClimber.set(state.get());
 	}
 
 	// ----- IControllable ----- //
 
 	@Override
 	public void control() {
-		if (ctrl.getStageClimb())
-			stageClimb();
-		else if (ctrl.getClimb())
-			climb();
+		if (ctrl.getStageClimb()) {
+			set(ClimberState.STAGE_CLIMB);
+		} else if (ctrl.getClimb()) {
+			set(ClimberState.CLIMB);
+		}
 	}
 
 	// ----- IReportable ----- //
 
 	@Override
 	public void report() {
-		SmartDashboard.putString(getClass().getSimpleName() + " State", mClimber.get().toString());
+		SmartDashboard.putString(getName() + " State", mClimber.get().toString());
+	}
+
+	// ----- Subsystem ----- //
+
+	@Override
+	protected void initDefaultCommand() {
 	}
 
 }
